@@ -40,5 +40,22 @@ export default function solution(content){
   const warmDate = date[temp.indexOf(String(maxTemp))]
   
   console.log(`HottestDay: ${warmDate} ${warmCity}`)
+
+  // 5
+
+  const temps = data.reduce((acc, value) => {
+    const city = value;
+    if (acc[city[7]]) {
+      acc[city[7]].push(city[1]);
+      return acc;
+    } else {
+      acc[city[7]] = [city[1]];
+      return acc;
+    }
+  }, {});
+  const averageTemps = Object.entries(temps).map(item => [item[0], item[1].reduce((acc, value) => Number(value) + acc, 0) / item.length]);
+  const maxAverageTemp = [...averageTemps].sort((a, b) => b[1] - a[1]);
+  console.log(`HottestCity: ${maxAverageTemp[0][0]}`);
+
   // END
 }
